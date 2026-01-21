@@ -1,0 +1,64 @@
+# ABOUTME: Trivy vulnerability scanner ignore list with justifications
+# ABOUTME: Documents accepted CVEs after risk assessment
+
+# ============================================================================
+# Trivy Ignore File
+# ============================================================================
+#
+# This file documents vulnerabilities that have been assessed and accepted.
+# Each entry MUST include a justification explaining why the vulnerability
+# is acceptable in this context.
+#
+# Format:
+#   CVE-YYYY-XXXXX  # Justification for accepting this vulnerability
+#
+# Review Policy:
+#   - Review all entries quarterly
+#   - Re-assess when new patches become available
+#   - Remove entries when vulnerability is fixed
+#
+# Severity Guidelines:
+#   - CRITICAL: Generally unacceptable, requires immediate fix or strong justification
+#   - HIGH: Requires justification, accept only if risk is mitigated
+#   - MEDIUM: May accept with justification
+#   - LOW: May accept without detailed justification
+#
+# ============================================================================
+
+# Example entries (remove when adding real vulnerabilities):
+#
+# CVE-2024-12345  # Alpine package xyz: No patch available, mitigated by firewall
+# CVE-2024-67890  # npm package abc: Only affects Windows, container is Linux-only
+# CVE-2024-11111  # False positive: Code path not reachable in container environment
+
+# ============================================================================
+# Scanner Strategy
+# ============================================================================
+#
+# Trivy (Primary - Blocks Releases):
+#   - Scans packages WE CONTROL: Alpine apk, npm, Python packages
+#   - Skips Go binaries: Claude Code binary, gh CLI (managed by Anthropic/GitHub)
+#   - Configured with skip-files to exclude /home/dev/.local/**, /usr/local/bin/claude, /usr/bin/gh
+#
+# Grype (Secondary - Visibility Only):
+#   - Scans EVERYTHING including Go binaries
+#   - Provides visibility into upstream vulnerabilities
+#   - Does NOT block releases
+#
+# Rationale:
+#   We cannot patch vulnerabilities in:
+#   - Claude Code binary (provided by Anthropic)
+#   - GitHub CLI binary (provided by GitHub)
+#   - Their embedded Go module dependencies
+#
+#   These binaries must be updated by their maintainers. We can only:
+#   1. Be aware of issues (via Grype reports)
+#   2. Inform users about known upstream vulnerabilities
+#   3. Update to newer versions when released
+#
+# ============================================================================
+# Accepted Vulnerabilities
+# ============================================================================
+
+# No vulnerabilities currently accepted in packages we control.
+# When accepting a CVE, add it below with clear justification.

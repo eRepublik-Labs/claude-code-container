@@ -1,0 +1,20 @@
+#!/bin/bash
+# ABOUTME: Custom file suggestion script for Claude Code file picker
+# ABOUTME: Uses rg + fzf for fuzzy matching with symlink support
+
+# Parse JSON input to get query
+QUERY=$(jq -r '.query // ""')
+
+# Use project dir from env, fallback to pwd
+PROJECT_DIR="${CLAUDE_PROJECT_DIR:-.}"
+
+# cd into project dir so rg outputs relative paths
+cd "$PROJECT_DIR" || exit 1
+
+{
+  # Main search - respects .gitignore, includes hidden files, follows symlinks
+  rg --files --follow --hidden . 2>/dev/null
+
+  # Additional paths - include even if gitignored (uncomment and customize)
+  # [ -e .notes ] && rg --files --follow --hidden --no-ignore-vcs .notes 2>/dev/null
+} | sort -u | fzf --filter "$QUERY" | head -15

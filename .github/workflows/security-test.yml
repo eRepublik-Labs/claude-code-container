@@ -1,0 +1,127 @@
+# ABOUTME: Simplified security testing workflow for local validation with act
+# ABOUTME: Tests security scanning features on pre-existing container image
+
+name: Security Test (Local)
+
+on:
+  workflow_dispatch:
+    inputs:
+      image:
+        description: 'Image to scan (default: ghcr.io/erepublik-labs/claude-code-container:latest)'
+        required: false
+        default: 'ghcr.io/erepublik-labs/claude-code-container:latest'
+
+env:
+  TEST_IMAGE: ${{ github.event.inputs.image || 'ghcr.io/erepublik-labs/claude-code-container:latest' }}
+
+jobs:
+  security-scan:
+    name: Security Scanning
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      security-events: write  # For SARIF upload
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Pull test image
+        run: |
+          echo "Pulling image: ${{ env.TEST_IMAGE }}"
+          docker pull ${{ env.TEST_IMAGE }}
+
+      - name: Run Trivy vulnerability scanner (SARIF)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ env.TEST_IMAGE }}
+          format: 'sarif'
+          output: 'trivy-results.sarif'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+
+      - name: Upload Trivy results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'trivy-results.sarif'
+
+      - name: Run Trivy vulnerability scanner (JSON)
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: ${{ env.TEST_IMAGE }}
+          format: 'json'
+          output: 'trivy-results.json'
+          severity: 'CRITICAL,HIGH,MEDIUM'
+          exit-code: '1'  # Fail on CRITICAL CVEs
+        continue-on-error: true  # For testing, don't block workflow
+
+      - name: Display Trivy results summary
+        if: always()
+        run: |
+          if [ -f trivy-results.json ]; then
+            echo "=== Trivy Scan Results ==="
+            jq -r '.Results[]? | select(.Vulnerabilities) |
+              "Target: \(.Target)\n" +
+              "Vulnerabilities: \(.Vulnerabilities | length)\n" +
+              "CRITICAL: \([.Vulnerabilities[] | select(.Severity=="CRITICAL")] | length)\n" +
+              "HIGH: \([.Vulnerabilities[] | select(.Severity=="HIGH")] | length)\n" +
+              "MEDIUM: \([.Vulnerabilities[] | select(.Severity=="MEDIUM")] | length)\n"' \
+              trivy-results.json || echo "No vulnerabilities found"
+          fi
+
+      - name: Generate SBOM with Syft
+        uses: anchore/sbom-action@v0.17.0
+        with:
+          image: ${{ env.TEST_IMAGE }}
+          format: spdx-json
+          output-file: sbom.spdx.json
+
+      - name: Display SBOM summary
+        if: always()
+        run: |
+          if [ -f sbom.spdx.json ]; then
+            echo "=== SBOM Summary ==="
+            echo "Total packages: $(jq '.packages | length' sbom.spdx.json)"
+            echo ""
+            echo "Package breakdown:"
+            jq -r '.packages[] | "\(.name) \(.versionInfo)"' sbom.spdx.json | head -20
+            echo ""
+            echo "(showing first 20 packages)"
+          fi
+
+      - name: Run Docker Scout scan
+        uses: docker/scout-action@v1
+        if: always()
+        with:
+          command: cves
+          image: ${{ env.TEST_IMAGE }}
+          format: sarif
+          output: scout-results.sarif
+        continue-on-error: true  # Don't fail if Scout has issues
+
+      - name: Upload Docker Scout results
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: 'scout-results.sarif'
+        continue-on-error: true
+
+      - name: Upload security reports
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: security-reports
+          path: |
+            trivy-results.json
+            trivy-results.sarif
+            sbom.spdx.json
+            scout-results.sarif
+          retention-days: 30
+
+      - name: Security scan complete
+        if: always()
+        run: |
+          echo "✅ Security scanning complete!"
+          echo "📊 Check the artifacts for detailed reports"
+          echo "🔒 Review the Security tab for SARIF results"

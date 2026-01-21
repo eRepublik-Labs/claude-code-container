@@ -1,0 +1,50 @@
+{
+  "theme": "tokyo-night",
+  "display": {
+    "padding": 1,
+    "style": "powerline",
+    "charset": "unicode",
+    "colorCompatibility": "truecolor",
+    "lines": [
+      {
+        "segments": {
+          "directory": {
+            "enabled": true,
+            "style": "basename"
+          },
+          "git": {
+            "enabled": true,
+            "showRepoName": true,
+            "showTimeSinceCommit": true
+          },
+          "model": {
+            "enabled": true
+          },
+          "context": {
+            "enabled": true,
+            "showPercentageOnly": false
+          },
+          "session": {
+            "enabled": true,
+            "type": "both"
+          },
+          "today": {
+            "enabled": true,
+            "type": "cost"
+          },
+          "metrics": {
+            "enabled": false
+          }
+        }
+      }
+    ]
+  },
+  "budget": {
+    "session": {"warningThreshold": 80},
+    "today": {"amount": 20.0, "warningThreshold": 80}
+  },
+  "modelContextLimits": {
+    "sonnet": 200000,
+    "opus": 200000
+  }
+}

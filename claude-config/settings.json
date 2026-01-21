@@ -1,0 +1,97 @@
+{
+  "fileSuggestion": {
+    "type": "command",
+    "command": "~/.claude/file-suggestion.sh"
+  },
+  "outputStyle": "Learning",
+  "extraKnownMarketplaces": {
+    "beads": {
+      "source": {
+        "source": "github",
+        "repo": "steveyegge/beads"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "beads@beads-marketplace": true
+  },
+  "env": {
+    "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "64000",
+    "MAX_THINKING_TOKENS": "31999"
+  },
+  "includeCoAuthoredBy": false,
+  "disabledTools": ["NotebookEdit", "NotebookRead"],
+  "permissions": {
+    "allow": [],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Read(./config/credentials.json)",
+      "Read(./build)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/git-safety-guard.py"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/skill-activation-prompt.sh"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/beads-context.sh",
+            "timeout": 10
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/aboutme-validator.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/credential-detector.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "claude-powerline --style=powerline --theme=tokyo-night",
+    "padding": 0
+  },
+  "alwaysThinkingEnabled": true
+}
