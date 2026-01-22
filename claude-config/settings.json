@@ -41,6 +41,15 @@
             "command": "~/.claude/hooks/git-safety-guard.py"
           }
         ]
+      },
+      {
+        "matcher": "tool == \"Bash\" && tool_input.command matches \"(npm|pnpm|yarn|cargo|pytest)\"",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -z \"$TMUX\" ]; then echo '[Hook] Consider tmux for session persistence' >&2; fi"
+          }
+        ]
       }
     ],
     "UserPromptSubmit": [

@@ -3,7 +3,8 @@ name: Publish Container Image
 on:
   push:
     tags:
-      - '20[0-9][0-9].[0-9][0-9].*'  # CalVer: YYYY.MM.PATCH
+      - '20[0-9][0-9].[1-9].*'     # CalVer: YYYY.M.PATCH (months 1-9)
+      - '20[0-9][0-9].1[0-2].*'    # CalVer: YYYY.M.PATCH (months 10-12)
   workflow_dispatch:
 
 env:
