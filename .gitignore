@@ -3,9 +3,8 @@
 .AppleDouble
 .LSOverride
 
-# Local Claude Code settings (except project commands)
-.claude/*
-!.claude/commands/
+# Local Claude Code settings
+.claude/
 
 # Local issue tracking
 .beads/
