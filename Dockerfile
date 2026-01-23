@@ -145,8 +145,7 @@ RUN mkdir -p /home/dev/.npm-global && \
 # Switch to root temporarily for npm global installs to avoid permission issues
 USER root
 # Install npm packages from registry
-# Use --ignore-scripts to avoid QEMU crashes during cross-platform builds
-RUN npm install -g --prefix /home/dev/.npm-global --ignore-scripts @owloops/claude-powerline && \
+RUN npm install -g --prefix /home/dev/.npm-global @owloops/claude-powerline && \
     chown -R dev:dev /home/dev/.npm-global
 
 # Copy npm globals to template location
