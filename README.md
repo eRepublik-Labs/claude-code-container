@@ -9,7 +9,6 @@ A secure, isolated environment for running Claude Code with:
 - **Zero Trust**: Default-deny policy with explicit service approval
 - **Multi-Runtime**: Works with Docker and Apple's container tool
 - **Ready to Use**: Pre-configured settings and optimized tools
-- **[Beads Issue Tracker](https://github.com/steveyegge/beads)**: Built-in `bd` command for Git-backed task management (`bd --help` for usage)
 
 ## Quick Start (5 Minutes)
 
@@ -403,9 +402,12 @@ See [Memory & Persistence Guide](docs/memory-and-persistence.md) for complete de
 | Variable | Description | Required | Default |
 |----------|-------------|----------|---------|
 | `CLAUDE_API_KEY` | API key for API key authentication | No* | - |
+| `CONTAINER_NAME` | Custom name for task list persistence | No | Container hostname |
 | `NODE_OPTIONS` | Node.js memory limit | No | `--max-old-space-size=3072` |
 
 *Required for API key authentication, optional for OAuth subscription
+
+**Task List Persistence**: The container sets `CLAUDE_CODE_TASK_LIST_ID` to the container name (from `CONTAINER_NAME` or hostname). This allows Claude Code's task list to persist across sessions when using the same container name. The helper functions above use `--name claude-$(basename "$PWD")` to automatically name containers by project directory.
 
 ### Memory Configuration
 

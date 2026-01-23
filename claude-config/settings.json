@@ -4,17 +4,6 @@
     "command": "~/.claude/file-suggestion.sh"
   },
   "outputStyle": "Learning",
-  "extraKnownMarketplaces": {
-    "beads": {
-      "source": {
-        "source": "github",
-        "repo": "steveyegge/beads"
-      }
-    }
-  },
-  "enabledPlugins": {
-    "beads@beads-marketplace": true
-  },
   "env": {
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "64000",
     "MAX_THINKING_TOKENS": "31999"
@@ -60,18 +49,6 @@
             "command": "~/.claude/hooks/skill-activation-prompt.sh"
           }
         ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "~/.claude/hooks/beads-context.sh",
-            "timeout": 10
-          }
-        ],
-        "matcher": ""
       }
     ],
     "PostToolUse": [

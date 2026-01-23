@@ -1,10 +1,6 @@
 # ABOUTME: Alpine Linux container with native Claude Code installation
 # ABOUTME: Minimal, fast container using musl libc and native Claude binary
 
-# Build beads issue tracker (Go binary needs musl-compatible build)
-FROM golang:1.24-alpine AS beads-builder
-RUN go install github.com/steveyegge/beads/cmd/bd@latest
-
 FROM alpine:3.22
 
 # Build arguments
@@ -127,10 +123,6 @@ RUN curl -fsSL https://claude.ai/install.sh | bash -s ${CLAUDE_CODE_VERSION} && 
     echo 'export PATH="$HOME/.local/bin:/usr/local/bin:$HOME/.npm-global/bin:$PATH"' >> /home/dev/.bashrc && \
     echo 'export PATH="$HOME/.local/bin:/usr/local/bin:$HOME/.npm-global/bin:$PATH"' >> /home/dev/.profile
 
-# Install beads plugin from marketplace (pre-install for offline use)
-RUN /home/dev/.local/bin/claude plugin marketplace add steveyegge/beads && \
-    /home/dev/.local/bin/claude plugin install beads@beads-marketplace --scope user || true
-
 # Note: Update notification is displayed in entrypoint.sh before starting Claude Code
 
 # Copy Claude installation to template location (survives volume mounts)
@@ -168,17 +160,12 @@ COPY scripts/git-status-fast.sh /usr/local/bin/
 COPY scripts/git-wrapper.sh /usr/local/bin/git-wrapper
 COPY scripts/check-updates.sh /usr/local/bin/
 
-# Copy beads issue tracker from build stage (real binary + wrapper for local-only mode)
-COPY --from=beads-builder /go/bin/bd /usr/local/bin/bd-real
-COPY scripts/bd-wrapper.sh /usr/local/bin/bd
-
 # Make scripts executable (755 for shell scripts that need read access)
 RUN chmod 755 /usr/local/bin/init-firewall.sh \
     /usr/local/bin/entrypoint.sh \
     /usr/local/bin/git-status-fast.sh \
     /usr/local/bin/git-wrapper \
-    /usr/local/bin/check-updates.sh \
-    /usr/local/bin/bd
+    /usr/local/bin/check-updates.sh
 
 # Replace system git with wrapper for automatic caching on large repos
 # Move to .git-original (not git-* pattern) to avoid git builtin name parsing issues
