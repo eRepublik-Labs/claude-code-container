@@ -252,21 +252,21 @@ Function cc {
 
 ## Image Versions
 
-This project uses **CalVer** (Calendar Versioning) with format: `YYYY.MM.PATCH`
+This project uses **CalVer** (Calendar Versioning) with format: `YYYY.M.PATCH`
 
 **Available tags:**
 - `latest` - Most recent release (auto-updated)
-- `2026.01.0` - Specific CalVer release
+- `2026.1.6` - Specific CalVer release
 
 **Examples:**
 ```bash
 # Docker - pull specific version
 docker pull ghcr.io/erepublik-labs/claude-code-container:latest
-docker pull ghcr.io/erepublik-labs/claude-code-container:2026.01.0
+docker pull ghcr.io/erepublik-labs/claude-code-container:2026.1.6
 
 # Apple Container - pull specific version
 container image pull ghcr.io/erepublik-labs/claude-code-container:latest
-container image pull ghcr.io/erepublik-labs/claude-code-container:2026.01.0
+container image pull ghcr.io/erepublik-labs/claude-code-container:2026.1.6
 ```
 
 See [releases](https://github.com/eRepublik-Labs/claude-code-container/releases) for version history.
@@ -464,21 +464,21 @@ Contributions welcome! Please:
 
 ### Creating Releases
 
-This project uses CalVer versioning: `YYYY.MM.PATCH`
+This project uses CalVer versioning: `YYYY.M.PATCH`
 
-**IMPORTANT: Tags must NOT include a `v` prefix.**
+**IMPORTANT: Tags must NOT include a `v` prefix or leading zeros in the month.**
 
 ```bash
-# Create release (NO 'v' prefix!)
-gh release create 2025.11.21 \
-  --title "2025.11.21" \
+# Create release (NO 'v' prefix, NO leading zero on month!)
+gh release create 2026.1.6 \
+  --title "2026.1.6" \
   --notes "Release notes"
 ```
 
-**Correct format:** `2025.11.21`, `2025.12.1`
-**Wrong format:** ~~`v2025.11.21`~~, ~~`v2025.12.1`~~
+**Correct format:** `2026.1.6`, `2026.12.1`
+**Wrong format:** ~~`v2026.1.6`~~, ~~`2026.01.6`~~
 
-The CI/CD workflow triggers on tags matching pattern `20[0-9][0-9].[0-9][0-9].*`
+The CI/CD workflow triggers on tags matching patterns `20[0-9][0-9].[1-9].*` and `20[0-9][0-9].1[0-2].*`
 
 ## Support
 
