@@ -256,17 +256,17 @@ This project uses **CalVer** (Calendar Versioning) with format: `YYYY.M.PATCH`
 
 **Available tags:**
 - `latest` - Most recent release (auto-updated)
-- `2026.1.6` - Specific CalVer release
+- `2026.2.0` - Specific CalVer release
 
 **Examples:**
 ```bash
 # Docker - pull specific version
 docker pull ghcr.io/erepublik-labs/claude-code-container:latest
-docker pull ghcr.io/erepublik-labs/claude-code-container:2026.1.6
+docker pull ghcr.io/erepublik-labs/claude-code-container:2026.2.0
 
 # Apple Container - pull specific version
 container image pull ghcr.io/erepublik-labs/claude-code-container:latest
-container image pull ghcr.io/erepublik-labs/claude-code-container:2026.1.6
+container image pull ghcr.io/erepublik-labs/claude-code-container:2026.2.0
 ```
 
 See [releases](https://github.com/eRepublik-Labs/claude-code-container/releases) for version history.
@@ -403,6 +403,7 @@ See [Memory & Persistence Guide](docs/memory-and-persistence.md) for complete de
 |----------|-------------|----------|---------|
 | `CLAUDE_API_KEY` | API key for API key authentication | No* | - |
 | `CONTAINER_NAME` | Custom name for task list persistence | No | Container hostname |
+| `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS` | Enable multi-agent teams (research preview) | No | `1` |
 | `NODE_OPTIONS` | Node.js memory limit | No | `--max-old-space-size=3072` |
 
 *Required for API key authentication, optional for OAuth subscription
@@ -470,12 +471,12 @@ This project uses CalVer versioning: `YYYY.M.PATCH`
 
 ```bash
 # Create release (NO 'v' prefix, NO leading zero on month!)
-gh release create 2026.1.6 \
-  --title "2026.1.6" \
+gh release create 2026.2.0 \
+  --title "2026.2.0" \
   --notes "Release notes"
 ```
 
-**Correct format:** `2026.1.6`, `2026.12.1`
+**Correct format:** `2026.2.0`, `2026.12.1`
 **Wrong format:** ~~`v2026.1.6`~~, ~~`2026.01.6`~~
 
 The CI/CD workflow triggers on tags matching patterns `20[0-9][0-9].[1-9].*` and `20[0-9][0-9].1[0-2].*`

@@ -207,6 +207,7 @@ fi
 # Put /usr/local/bin before npm-global so wrappers take precedence
 export PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:$PATH"
 export CLAUDE_PROJECT_DIR=/workspace
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
 
 # Set task list ID from container name for persistent task tracking across sessions
 # Uses CONTAINER_NAME if explicitly set, otherwise falls back to HOSTNAME
@@ -219,9 +220,9 @@ if [ "$(id -u)" = "0" ]; then
   # Unset CLAUDE_API_KEY for the dev user environment
   unset CLAUDE_API_KEY
   if [ $# -eq 0 ]; then
-    exec su-exec dev env -u CLAUDE_API_KEY PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin" CLAUDE_PROJECT_DIR=/workspace CLAUDE_CODE_TASK_LIST_ID="$CLAUDE_CODE_TASK_LIST_ID" HOME=/home/dev /bin/bash
+    exec su-exec dev env -u CLAUDE_API_KEY PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin" CLAUDE_PROJECT_DIR=/workspace CLAUDE_CODE_TASK_LIST_ID="$CLAUDE_CODE_TASK_LIST_ID" CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 HOME=/home/dev /bin/bash
   else
-    exec su-exec dev env -u CLAUDE_API_KEY PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin" CLAUDE_PROJECT_DIR=/workspace CLAUDE_CODE_TASK_LIST_ID="$CLAUDE_CODE_TASK_LIST_ID" HOME=/home/dev "$@"
+    exec su-exec dev env -u CLAUDE_API_KEY PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin" CLAUDE_PROJECT_DIR=/workspace CLAUDE_CODE_TASK_LIST_ID="$CLAUDE_CODE_TASK_LIST_ID" CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 HOME=/home/dev "$@"
   fi
 else
   # Already dev user, just execute
@@ -230,8 +231,8 @@ else
   # Unset CLAUDE_API_KEY for current environment
   unset CLAUDE_API_KEY
   if [ $# -eq 0 ]; then
-    exec env -u CLAUDE_API_KEY PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin" CLAUDE_PROJECT_DIR=/workspace CLAUDE_CODE_TASK_LIST_ID="$CLAUDE_CODE_TASK_LIST_ID" HOME=/home/dev /bin/bash
+    exec env -u CLAUDE_API_KEY PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin" CLAUDE_PROJECT_DIR=/workspace CLAUDE_CODE_TASK_LIST_ID="$CLAUDE_CODE_TASK_LIST_ID" CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 HOME=/home/dev /bin/bash
   else
-    exec env -u CLAUDE_API_KEY PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin" CLAUDE_PROJECT_DIR=/workspace CLAUDE_CODE_TASK_LIST_ID="$CLAUDE_CODE_TASK_LIST_ID" HOME=/home/dev "$@"
+    exec env -u CLAUDE_API_KEY PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin" CLAUDE_PROJECT_DIR=/workspace CLAUDE_CODE_TASK_LIST_ID="$CLAUDE_CODE_TASK_LIST_ID" CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 HOME=/home/dev "$@"
   fi
 fi
