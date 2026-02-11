@@ -50,7 +50,6 @@ RUN apk add --no-cache \
   fzf \
   nano \
   tmux \
-  python3 \
   \
   # Network and firewall
   iptables-legacy \

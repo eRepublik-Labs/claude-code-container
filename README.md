@@ -323,16 +323,19 @@ For detailed security information, see [SECURITY.md](SECURITY.md).
 - API keys secured in files (chmod 600), never in environment
 - No cached layers during build
 
-### Command Safety Guard
-A PreToolUse hook (`git-safety-guard.py`) automatically blocks destructive commands before execution:
-- **Git data loss**: `git checkout --`, `git restore`, `git reset --hard`, `git clean -f`
-- **Force operations**: `git push --force` (allows `--force-with-lease`), `git branch -D`
-- **Filesystem**: `rm -rf` (except `/tmp`, `/var/tmp`, `$TMPDIR`)
-- **Stash destruction**: `git stash drop`, `git stash clear`
+## Plugins
 
-**Dependencies**: Python 3 (installed via Alpine packages)
+The container ships with plugins pre-configured from two marketplaces:
 
-Safe operations like creating branches, unstaging files, and dry runs are allowed.
+**[beads](https://github.com/steveyegge/beads)** - Git-backed issue tracker for multi-session work with dependencies and persistent memory across conversation compaction.
+
+**[hex-plugins](https://github.com/hex/claude-marketplace):**
+
+| Plugin | Description |
+|--------|-------------|
+| [claude-council](https://github.com/hex/claude-council) | Consult multiple AI coding agents (Gemini, OpenAI, Grok) for diverse perspectives on coding problems |
+| [claude-image-generation](https://github.com/hex/claude-image-generation) | Generate and edit images using Google Gemini and OpenAI GPT Image APIs |
+| [claude-guard](https://github.com/hex/claude-guard) | Safety guardian that prevents destructive commands, blocks credential exposure, and redirects dangerous operations to safer alternatives |
 
 ## Key Features
 
