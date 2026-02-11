@@ -479,7 +479,11 @@ gh release create 2026.2.0 \
 **Correct format:** `2026.2.0`, `2026.12.1`
 **Wrong format:** ~~`v2026.1.6`~~, ~~`2026.01.6`~~
 
+<<<<<<< HEAD
 The CI/CD workflow triggers on tags matching patterns `20[0-9][0-9].[1-9].*` and `20[0-9][0-9].1[0-2].*`
+=======
+The CI/CD workflow triggers on tags matching patterns `20[0-9][0-9].[1-9].*` (months 1-9) and `20[0-9][0-9].1[0-2].*` (months 10-12)
+>>>>>>> d84466a (docs: update CalVer format, add hex-plugins marketplace)
 
 ## Support
 

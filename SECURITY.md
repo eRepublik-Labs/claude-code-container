@@ -10,7 +10,7 @@ We actively maintain and provide security updates for the following versions:
 | 2025.x  | :white_check_mark: |
 | < 2025  | :x:                |
 
-**Note:** We use CalVer versioning (YYYY.MM.PATCH). Only the current calendar year receives security updates.
+**Note:** We use CalVer versioning (YYYY.M.PATCH). Only the current calendar year receives security updates.
 
 ## Security Features
 
