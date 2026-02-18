@@ -26,7 +26,9 @@
   },
   "env": {
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "64000",
-    "MAX_THINKING_TOKENS": "31999"
+    "MAX_THINKING_TOKENS": "31999",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "claude-sonnet-4-6",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "claude-sonnet-4-6"
   },
   "includeCoAuthoredBy": false,
   "disabledTools": ["NotebookEdit", "NotebookRead"],
