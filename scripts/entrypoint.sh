@@ -133,7 +133,7 @@ _timer_end "Hooks sync"
 # Merge our preferred settings into .claude.json (file should exist from restore above)
 _timer_start
 if [ -f /home/dev/.claude.json ]; then
-  jq '. + {"hasTrustDialogHooksAccepted": true, "hasTrustDialogAccepted": true, "hasCompletedOnboarding": true, "bypassPermissionsModeAccepted": true, "theme": "dark", "installMethod": "native", "autoCompactEnabled": false}' \
+  jq '. + {"hasTrustDialogHooksAccepted": true, "hasTrustDialogAccepted": true, "hasCompletedOnboarding": true, "bypassPermissionsModeAccepted": true, "theme": "dark", "installMethod": "native", "autoCompactEnabled": true}' \
     /home/dev/.claude.json > /home/dev/.claude.json.tmp && \
   mv /home/dev/.claude.json.tmp /home/dev/.claude.json
   chown dev:dev /home/dev/.claude.json
