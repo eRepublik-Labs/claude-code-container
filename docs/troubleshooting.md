@@ -112,6 +112,24 @@ Previous versions had firewall issues that have been resolved:
 - ✅ **Duplicate IP entries**: Uses `-exist` flag to handle gracefully
 - ✅ **Apple Container incompatibility**: Firewall now works with iptables-legacy on Apple Container
 
+## Git Issues
+
+### "cannot run ssh" or "Permission denied (publickey)"
+
+The container has no SSH binary. Git SSH URLs are automatically rewritten to HTTPS via `.gitconfig`, but this requires the config to be present.
+
+**Check if `.gitconfig` is intact:**
+```bash
+# Inside container
+cat ~/.gitconfig
+# Should show:
+# [url "https://github.com/"]
+#   insteadOf = git@github.com:
+#   insteadOf = ssh://git@github.com/
+```
+
+**If missing** (e.g., after manual deletion), restart the container — the entrypoint restores it automatically from `/opt/claude-templates/.gitconfig`.
+
 ## Performance Issues
 
 ### Container Feels Slow
