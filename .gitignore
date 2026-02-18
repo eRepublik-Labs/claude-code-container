@@ -44,3 +44,5 @@ workspace/
 test-workspace/
 solution/
 .mcp.json
+.cs/archives/
+.cs/.discoveries-reminder-cooldown
