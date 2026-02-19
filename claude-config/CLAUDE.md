@@ -36,6 +36,7 @@ All other network requests are blocked for security.
 **Development:**
 - `gh` - GitHub CLI (run `gh auth login` on first use)
 - `tmux` - Terminal multiplexer for persistent sessions
+- `ssh` - SSH client for remote connections (use `/remote` for managed SSH via tmux)
 - `nano` - Text editor
 
 ## Foundational Rules
