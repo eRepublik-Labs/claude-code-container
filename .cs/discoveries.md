@@ -10,13 +10,11 @@
 - Git wrapper symlink (`/usr/bin/git -> /usr/local/bin/git-wrapper`) in place
 - Running without `-it` works for scripted tests (entrypoint handles non-TTY gracefully)
 
-## 2026-02-18: Plugin clone failures (git SSH URL rewrite)
+## 2026-02-18: Plugin clone failures (resolved by adding openssh-client)
 
-- Plugins from `hex-plugins` marketplace failed to clone because git defaults to SSH for `github.com` URLs
-- Fix: `git config --global url."https://github.com/".insteadOf` rewrites both SSH URL formats (`git@github.com:` and `ssh://git@github.com/`) to HTTPS
-- `git config` with same section key overwrites by default — need `--add` for the second `insteadOf` value
-- `.gitconfig` must be backed up to `/opt/claude-templates/` and restored in entrypoint, otherwise volume mounts at `/home/dev` hide it
-- Note: `openssh-client` was added later (2026-02-19) for claude-tmux plugin, but git HTTPS rewrite remains necessary for firewall compatibility
+- Plugins from `hex-plugins` marketplace failed to clone because git defaults to SSH for `github.com` URLs and there was no SSH client
+- Original fix: `.gitconfig` HTTPS URL rewrite (`insteadOf` rules)
+- Final fix: Added `openssh-client` to container (2026-02-19) and removed the HTTPS rewrite -- the firewall already allows outbound SSH (port 22) to all destinations, and GitHub CIDRs include git ranges
 
 ## 2026-02-18: Dead hook reference
 

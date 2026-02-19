@@ -222,7 +222,7 @@ curl --connect-timeout 5 https://api.anthropic.com
 - External ripgrep required (`USE_BUILTIN_RIPGREP=0`)
 - Process management via su-exec (Alpine's gosu alternative)
 - ast-grep installed from native Alpine package (edge/community repository)
-- SSH client available via `openssh-client`; git SSH URLs (`git@github.com:`) are still rewritten to HTTPS via `.gitconfig` for firewall compatibility
+- SSH client available via `openssh-client`; firewall allows outbound SSH (port 22)
 - Firewall works in both Docker (requires `--cap-add=NET_ADMIN --cap-add=NET_RAW`) and Apple Container
 - Apple Container automatically builds ARM64 images on Apple Silicon
 
@@ -476,9 +476,6 @@ With a single `dev-home` volume, the following persist across container restarts
 - **npm Global Packages**: `/home/dev/.npm-global/`
   - claude-powerline
 
-- **Git Configuration**: `/home/dev/.gitconfig`
-  - HTTPS URL rewrite rules for GitHub (git operations use HTTPS for firewall compatibility)
-
 - **System Tools**: Installed via Alpine packages
   - ast-grep (native Alpine package from edge/community)
 
@@ -488,8 +485,7 @@ On first run with a fresh volume, the container automatically restores essential
 
 1. **Claude Code installation** - Copied from `/opt/claude-installation/.local/`
 2. **npm global packages** - Copied from `/opt/claude-installation/.npm-global/`
-3. **Git configuration** - Copied from `/opt/claude-templates/.gitconfig`
-4. **Configuration templates** - Copied from `/opt/claude-templates/`
+3. **Configuration templates** - Copied from `/opt/claude-templates/`
 
 **Performance:**
 - First run: ~3 seconds (one-time restoration)

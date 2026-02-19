@@ -83,14 +83,6 @@ if [ -d /opt/claude-installation/plugins ] && [ ! -d /home/dev/.claude/plugins ]
 fi
 _timer_end "Plugins restore"
 
-# Restore .gitconfig if volume mount hid it (HTTPS rewrite for GitHub)
-_timer_start
-if [ ! -f /home/dev/.gitconfig ]; then
-  cp /opt/claude-templates/.gitconfig /home/dev/.gitconfig
-  chown dev:dev /home/dev/.gitconfig
-fi
-_timer_end ".gitconfig restore"
-
 # Ensure .bashrc exists with correct PATH
 _timer_start
 if [ ! -f /home/dev/.bashrc ]; then

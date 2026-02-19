@@ -224,7 +224,7 @@ container run -it --rm \
 - ✅ File edit history
 - ✅ Shell command history
 - ✅ OAuth credentials (if using subscription auth)
-- ✅ Git configuration (`~/.gitconfig` — HTTPS rewrite for GitHub)
+- ✅ Git configuration (`~/.gitconfig`)
 
 ### Minimal Persistence (Workspace Only)
 

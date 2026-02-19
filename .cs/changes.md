@@ -12,3 +12,15 @@
 - [2026-02-19 14:54:03] Edit: /Users/alex.geana/GitHub/claude-code-container/Dockerfile
 - [2026-02-19 14:54:04] Edit: /Users/alex.geana/GitHub/claude-code-container/claude-config/settings.json
 - [2026-02-19 14:54:31] Edit: /Users/alex.geana/GitHub/claude-code-container/claude-config/CLAUDE.md
+- [2026-02-19 14:56:58] Edit: /Users/alex.geana/GitHub/claude-code-container/README.md
+- [2026-02-19 14:59:07] Write: /Users/alex.geana/GitHub/claude-code-container/claude-config/skills/taskmaster/SKILL.md
+- [2026-02-19 14:59:15] Write: /Users/alex.geana/GitHub/claude-code-container/claude-config/skills/taskmaster/hooks/check-completion.sh
+- [2026-02-19 14:59:33] Edit: /Users/alex.geana/GitHub/claude-code-container/claude-config/settings.json
+- [2026-02-19 14:59:47] Edit: /Users/alex.geana/GitHub/claude-code-container/Dockerfile
+- [2026-02-19 14:59:57] Edit: /Users/alex.geana/GitHub/claude-code-container/scripts/entrypoint.sh
+- [2026-02-19 15:00:18] Edit: /Users/alex.geana/GitHub/claude-code-container/README.md
+- [2026-02-19 15:32:37] Edit: /Users/alex.geana/GitHub/claude-code-container/Dockerfile
+- [2026-02-19 15:32:39] Edit: /Users/alex.geana/GitHub/claude-code-container/Dockerfile
+- [2026-02-19 15:32:44] Edit: /Users/alex.geana/GitHub/claude-code-container/scripts/entrypoint.sh
+- [2026-02-19 15:33:12] Edit: /Users/alex.geana/GitHub/claude-code-container/docs/troubleshooting.md
+- [2026-02-19 15:33:13] Edit: /Users/alex.geana/GitHub/claude-code-container/docs/memory-and-persistence.md

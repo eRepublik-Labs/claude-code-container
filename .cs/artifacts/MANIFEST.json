@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "filename": "check-completion.sh",
+    "original_path": "/Users/alex.geana/GitHub/claude-code-container/claude-config/skills/taskmaster/hooks/check-completion.sh",
+    "timestamp": "2026-02-19T12:59:15Z",
+    "contains_secrets": 0
+  }
+]

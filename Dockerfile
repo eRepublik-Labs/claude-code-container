@@ -122,10 +122,6 @@ RUN chmod +x /opt/claude-templates/hooks/*.sh 2>/dev/null || true && \
 USER dev
 WORKDIR /home/dev
 
-# Force git to use HTTPS for GitHub (no SSH binary needed, works with firewall)
-RUN git config --global url."https://github.com/".insteadOf "git@github.com:" && \
-    git config --global --add url."https://github.com/".insteadOf "ssh://git@github.com/"
-
 # Install Claude Code using the official installer
 RUN curl -fsSL https://claude.ai/install.sh | bash -s ${CLAUDE_CODE_VERSION} && \
     echo 'export PATH="$HOME/.local/bin:/usr/local/bin:$HOME/.npm-global/bin:$PATH"' >> /home/dev/.bashrc && \
@@ -133,10 +129,9 @@ RUN curl -fsSL https://claude.ai/install.sh | bash -s ${CLAUDE_CODE_VERSION} && 
 
 # Note: Update notification is displayed in entrypoint.sh before starting Claude Code
 
-# Copy Claude installation and gitconfig to template location (survives volume mounts)
+# Copy Claude installation to template location (survives volume mounts)
 USER root
-RUN cp /home/dev/.gitconfig /opt/claude-templates/.gitconfig && \
-    mkdir -p /opt/claude-installation && \
+RUN mkdir -p /opt/claude-installation && \
     cp -r /home/dev/.local /opt/claude-installation/ && \
     cp /home/dev/.claude.json /opt/claude-installation/.claude.json && \
     cp -r /home/dev/.claude/plugins /opt/claude-installation/ 2>/dev/null || true && \

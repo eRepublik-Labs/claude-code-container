@@ -114,21 +114,20 @@ Previous versions had firewall issues that have been resolved:
 
 ## Git Issues
 
-### "cannot run ssh" or "Permission denied (publickey)"
+### "Permission denied (publickey)"
 
-The container has no SSH binary. Git SSH URLs are automatically rewritten to HTTPS via `.gitconfig`, but this requires the config to be present.
+The container includes an SSH client (`openssh-client`). If you see this error when using git over SSH:
 
-**Check if `.gitconfig` is intact:**
+**Check SSH key setup:**
 ```bash
-# Inside container
-cat ~/.gitconfig
-# Should show:
-# [url "https://github.com/"]
-#   insteadOf = git@github.com:
-#   insteadOf = ssh://git@github.com/
+# Inside container — verify your SSH key is available
+ls -la ~/.ssh/
+ssh -T git@github.com
 ```
 
-**If missing** (e.g., after manual deletion), restart the container — the entrypoint restores it automatically from `/opt/claude-templates/.gitconfig`.
+**If no SSH keys are available**, either:
+- Mount your host `.ssh` directory: `-v "$HOME/.ssh:/home/dev/.ssh:ro"`
+- Use HTTPS authentication instead: `gh auth login`
 
 ## Performance Issues
 
