@@ -24,3 +24,12 @@
 - Script doesn't exist in `claude-config/hooks/` — only `aboutme-validator.sh` is shipped
 - Caused "UserPromptSubmit hook error" on every prompt in the container
 - Fix: removed the hook entry from settings template
+
+## 2026-02-19: Adding hex/claude-tmux plugin
+
+- Plugin provides SSH remote host management via tmux panes (`/remote` command)
+- Requires `tmux`, `jq`, and SSH client -- tmux and jq already in container, added `openssh-client`
+- Plugin enabled via `"claude-tmux@hex-plugins": true` in settings.json `enabledPlugins`
+- hex/claude-marketplace already configured as `extraKnownMarketplaces` -- no marketplace config change needed
+- Firewall caveat: SSH to remote hosts only works for local subnet (auto-allowed) or manually added IPs
+- `openssh-client` adds ~2MB to Alpine image; provides ssh, scp, sftp, ssh-keygen
