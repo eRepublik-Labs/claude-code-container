@@ -50,6 +50,7 @@ RUN apk add --no-cache \
   fzf \
   nano \
   tmux \
+  openssh-client \
   \
   # Network and firewall
   iptables-legacy \

@@ -222,7 +222,7 @@ curl --connect-timeout 5 https://api.anthropic.com
 - External ripgrep required (`USE_BUILTIN_RIPGREP=0`)
 - Process management via su-exec (Alpine's gosu alternative)
 - ast-grep installed from native Alpine package (edge/community repository)
-- No SSH binary; git SSH URLs (`git@github.com:`) are rewritten to HTTPS via `.gitconfig`
+- SSH client available via `openssh-client`; git SSH URLs (`git@github.com:`) are still rewritten to HTTPS via `.gitconfig` for firewall compatibility
 - Firewall works in both Docker (requires `--cap-add=NET_ADMIN --cap-add=NET_RAW`) and Apple Container
 - Apple Container automatically builds ARM64 images on Apple Silicon
 
@@ -477,7 +477,7 @@ With a single `dev-home` volume, the following persist across container restarts
   - claude-powerline
 
 - **Git Configuration**: `/home/dev/.gitconfig`
-  - HTTPS URL rewrite rules for GitHub (no SSH binary in container)
+  - HTTPS URL rewrite rules for GitHub (git operations use HTTPS for firewall compatibility)
 
 - **System Tools**: Installed via Alpine packages
   - ast-grep (native Alpine package from edge/community)
@@ -853,6 +853,7 @@ Installed tools available:
 - `fzf` - fuzzy finder for interactive selection
 - `jq` - JSON processor
 - `gh` - GitHub CLI
+- `ssh` - SSH client for remote connections
 - `dig` - DNS lookup
 - `nano` - text editor (default)
 
