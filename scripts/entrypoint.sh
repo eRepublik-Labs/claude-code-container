@@ -130,6 +130,15 @@ chown -R dev:dev /home/dev/.claude/hooks
 chmod +x /home/dev/.claude/hooks/*.sh 2>/dev/null || true
 _timer_end "Hooks sync"
 
+# Always sync skills from templates (merge new skills without overwriting existing)
+_timer_start
+if [ -d /opt/claude-templates/skills ]; then
+  cp -rn /opt/claude-templates/skills/* /home/dev/.claude/skills/ 2>/dev/null || true
+  chown -R dev:dev /home/dev/.claude/skills
+  find /home/dev/.claude/skills -name '*.sh' -exec chmod +x {} + 2>/dev/null || true
+fi
+_timer_end "Skills sync"
+
 # Merge our preferred settings into .claude.json (file should exist from restore above)
 _timer_start
 if [ -f /home/dev/.claude.json ]; then
