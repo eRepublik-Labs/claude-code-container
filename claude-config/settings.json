@@ -66,6 +66,17 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "$HOME/.claude/skills/taskmaster/hooks/check-completion.sh",
+            "timeout": 10
+          }
+        ]
+      }
     ]
   },
   "statusLine": {
