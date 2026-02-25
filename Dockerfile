@@ -87,7 +87,7 @@ RUN addgroup -g 1000 dev && \
 
 # Create workspace and config directories
 RUN mkdir -p /workspace /home/dev/.claude /home/dev/.claude/agents \
-    /home/dev/.claude/commands /home/dev/.claude/hooks /home/dev/.claude/skills && \
+    /home/dev/.claude/commands /home/dev/.claude/hooks && \
     mkdir -p /home/dev/.local/bin && \
     chown -R dev:dev /workspace /home/dev
 
@@ -98,7 +98,6 @@ COPY claude-config/settings.json /opt/claude-templates/settings.json
 COPY claude-config/claude-powerline.json /opt/claude-templates/claude-powerline.json
 COPY claude-config/commands/ /opt/claude-templates/commands/
 COPY claude-config/hooks/ /opt/claude-templates/hooks/
-COPY claude-config/skills/ /opt/claude-templates/skills/
 
 # Copy default Claude config (can be overridden with runtime mount)
 COPY --chown=dev:dev claude-config/CLAUDE.md /home/dev/.claude/CLAUDE.md
@@ -106,16 +105,13 @@ COPY --chown=dev:dev claude-config/settings.json /home/dev/.claude/
 COPY --chown=dev:dev claude-config/claude-powerline.json /home/dev/.claude/
 COPY --chown=dev:dev claude-config/commands/ /home/dev/.claude/commands/
 COPY --chown=dev:dev claude-config/hooks/ /home/dev/.claude/hooks/
-COPY --chown=dev:dev claude-config/skills/ /home/dev/.claude/skills/
 COPY --chown=dev:dev scripts/file-suggestion.sh /home/dev/.claude/file-suggestion.sh
 
 # Make hook scripts, skill hooks, and file-suggestion executable
 RUN chmod +x /opt/claude-templates/hooks/*.sh 2>/dev/null || true && \
     chmod +x /opt/claude-templates/hooks/*.py 2>/dev/null || true && \
-    find /opt/claude-templates/skills -name '*.sh' -exec chmod +x {} + 2>/dev/null || true && \
     chmod +x /home/dev/.claude/hooks/*.sh 2>/dev/null || true && \
     chmod +x /home/dev/.claude/hooks/*.py 2>/dev/null || true && \
-    find /home/dev/.claude/skills -name '*.sh' -exec chmod +x {} + 2>/dev/null || true && \
     chmod +x /home/dev/.claude/file-suggestion.sh 2>/dev/null || true
 
 # Install Claude Code native binary as dev user
