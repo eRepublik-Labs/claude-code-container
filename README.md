@@ -338,12 +338,6 @@ The container ships with plugins pre-configured from two marketplaces:
 | [claude-guard](https://github.com/hex/claude-guard) | Safety guardian that prevents destructive commands, blocks credential exposure, and redirects dangerous operations to safer alternatives |
 | [claude-tmux](https://github.com/hex/claude-tmux) | Connect to remote hosts via SSH in tmux panes with saved host management (`/remote` command) |
 
-**Built-in skills:**
-
-| Skill | Description |
-|-------|-------------|
-| [taskmaster](https://github.com/blader/taskmaster) | Stop hook that keeps the agent working until all plans and user requests are 100% complete |
-
 ## Key Features
 
 ### File Suggestion
