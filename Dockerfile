@@ -88,6 +88,7 @@ RUN apk add --no-cache --virtual .build-deps gcc musl-dev && \
     gcc -shared -fPIC -O2 -o /usr/local/lib/posix_getdents_fix.so /tmp/posix_getdents_fix.c && \
     apk del .build-deps && \
     rm /tmp/posix_getdents_fix.c
+ENV LD_PRELOAD=/usr/local/lib/posix_getdents_fix.so
 
 # Create dev user with specific UID/GID for volume compatibility
 RUN addgroup -g 1000 dev && \
