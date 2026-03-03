@@ -203,6 +203,12 @@ if [ -x /usr/local/bin/check-updates.sh ]; then
   timeout 3 /usr/local/bin/check-updates.sh >/dev/null 2>&1 || true
 fi
 
+# Load posix_getdents shim for musl/glibc compatibility (anthropics/claude-code#29559)
+# Claude Code v2.1.63+ references posix_getdents, a glibc-specific symbol absent from musl
+if [ -f /usr/local/lib/posix_getdents_fix.so ]; then
+  export LD_PRELOAD="/usr/local/lib/posix_getdents_fix.so${LD_PRELOAD:+:$LD_PRELOAD}"
+fi
+
 # Set PATH to include git wrapper and Claude binary
 # Put /usr/local/bin before npm-global so wrappers take precedence
 export PATH="/home/dev/.local/bin:/usr/local/bin:/home/dev/.npm-global/bin:$PATH"

@@ -81,6 +81,14 @@ RUN apk add --no-cache \
   nodejs \
   npm
 
+# Build posix_getdents shim for musl/glibc compatibility (anthropics/claude-code#29559)
+# Claude Code v2.1.63+ references posix_getdents, a glibc-specific symbol absent from musl
+COPY scripts/posix_getdents_fix.c /tmp/posix_getdents_fix.c
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev && \
+    gcc -shared -fPIC -O2 -o /usr/local/lib/posix_getdents_fix.so /tmp/posix_getdents_fix.c && \
+    apk del .build-deps && \
+    rm /tmp/posix_getdents_fix.c
+
 # Create dev user with specific UID/GID for volume compatibility
 RUN addgroup -g 1000 dev && \
     adduser -u 1000 -G dev -s /bin/bash -D dev
