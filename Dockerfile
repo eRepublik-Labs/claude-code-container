@@ -61,6 +61,9 @@ RUN apk add --no-cache \
   \
   # Process management (Alpine's gosu alternative)
   su-exec && \
+  # Pre-populate GitHub SSH host keys (system-wide, survives volume mounts)
+  mkdir -p /etc/ssh && \
+  ssh-keyscan -t ed25519,ecdsa,rsa github.com >> /etc/ssh/ssh_known_hosts 2>/dev/null && \
   # Configure iptables to use legacy backend (must be after package install)
   # Symlink both /sbin and /usr/sbin to ensure legacy is used regardless of PATH
   ln -sf /sbin/iptables-legacy /sbin/iptables && \
