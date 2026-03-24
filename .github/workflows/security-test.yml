@@ -33,7 +33,7 @@ jobs:
           docker pull ${{ env.TEST_IMAGE }}
 
       - name: Run Trivy vulnerability scanner (SARIF)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.35.0
         with:
           image-ref: ${{ env.TEST_IMAGE }}
           format: 'sarif'
@@ -47,7 +47,7 @@ jobs:
           sarif_file: 'trivy-results.sarif'
 
       - name: Run Trivy vulnerability scanner (JSON)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.35.0
         with:
           image-ref: ${{ env.TEST_IMAGE }}
           format: 'json'
